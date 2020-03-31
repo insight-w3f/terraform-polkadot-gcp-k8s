@@ -28,6 +28,24 @@ module "this" {
 No issue is creating limit on this module.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Providers
+
+No provider.
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:-----:|
+| environment | The environment | `string` | `""` | no |
+| namespace | The namespace to deploy into | `string` | `""` | no |
+| network\_name | The network name, ie kusama / mainnet | `string` | `""` | no |
+| owner | Owner of the infrastructure | `string` | `""` | no |
+| stage | The stage of the deployment | `string` | `""` | no |
+| zone | The Azure zone to deploy in | `string` | `"eastus1"` | no |
+
+## Outputs
+
+No output.
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
