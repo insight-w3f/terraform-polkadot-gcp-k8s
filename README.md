@@ -45,7 +45,7 @@ No issue is creating limit on this module.
 | cluster\_autoscale\_min\_workers | Minimum number of workers in worker pool | `number` | `1` | no |
 | cluster\_name | Name of the k8s cluster | `string` | `"cluster"` | no |
 | environment | The environment | `string` | `""` | no |
-| k8s\_version | Version of k8s to use | `string` | `"1.15.11-gke.1"` | no |
+| k8s\_version | Version of k8s to use | `string` | n/a | yes |
 | location | The GCP location to deploy in | `string` | `"us-east1"` | no |
 | namespace | The namespace to deploy into | `string` | `""` | no |
 | network\_name | The network name, ie kusama / mainnet | `string` | `""` | no |

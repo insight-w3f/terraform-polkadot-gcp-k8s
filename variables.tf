@@ -60,7 +60,7 @@ variable "cluster_name" {
 variable "k8s_version" {
   description = "Version of k8s to use"
   type        = string
-  default     = "1.15.11-gke.1"
+  default     = null
 }
 
 variable "num_workers" {
