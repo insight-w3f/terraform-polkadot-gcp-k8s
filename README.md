@@ -28,45 +28,39 @@ module "this" {
 No issue is creating limit on this module.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+No requirements.
+
 ## Providers
 
-| Name | Version |
-|------|---------|
-| google | n/a |
-| local | n/a |
-| template | n/a |
+No provider.
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
-| cluster\_autoscale | Do you want the cluster's worker pool to autoscale? | `bool` | `false` | no |
-| cluster\_autoscale\_max\_workers | Maximum number of workers in worker pool | `number` | `1` | no |
-| cluster\_autoscale\_min\_workers | Minimum number of workers in worker pool | `number` | `1` | no |
+|------|-------------|------|---------|:--------:|
+| cluster\_autoscale | Do you want the cluster's worker pool to autoscale? | `bool` | `true` | no |
+| cluster\_autoscale\_max\_workers | Maximum number of workers in worker pool | `number` | `0` | no |
+| cluster\_autoscale\_min\_workers | Minimum number of workers in worker pool | `number` | `0` | no |
 | cluster\_name | Name of the k8s cluster | `string` | `"cluster"` | no |
 | environment | The environment | `string` | `""` | no |
-| k8s\_version | Version of k8s to use | `string` | n/a | yes |
-| location | The GCP location to deploy in | `string` | `"us-east1"` | no |
 | namespace | The namespace to deploy into | `string` | `""` | no |
 | network\_name | The network name, ie kusama / mainnet | `string` | `""` | no |
 | num\_workers | Number of workers for worker pool | `number` | `1` | no |
 | owner | Owner of the infrastructure | `string` | `""` | no |
+| project | The GCP project | `string` | n/a | yes |
+| region | The GCP region to deploy in | `string` | `"us-east1"` | no |
 | stage | The stage of the deployment | `string` | `""` | no |
-| subnet\_id | Name or self-link of the GCE subnet to connect to cluster | `string` | n/a | yes |
-| vpc\_id | Name or self-link of the GCE VPC to connect to cluster | `string` | n/a | yes |
+| vpc\_name | Name of the GCE VPC to connect to cluster | `string` | n/a | yes |
 | worker\_instance\_type | Instance type for workers | `string` | `"n1-standard-1"` | no |
-| zone | The GCP zone to deploy in | `string` | `"us-east1-b"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
 | cluster\_ca\_cert | The base64 encoded public certificate for the cluster's certificate authority |
-| cluster\_client\_certificate | The base64 encoded public certificate used by clients to access the cluster |
-| cluster\_client\_key | The base64 encoded private key used by clients to access the cluster |
 | endpoint | The base URL of the API server on the Kubernetes master node |
-| id | A unique ID that can be used to identify and reference a Kubernetes cluster |
-| kube\_config | The full contents of the Kubernetes cluster's kubeconfig file |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

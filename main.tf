@@ -12,71 +12,49 @@ module "label" {
   stage       = var.stage
 }
 
-resource "google_container_cluster" "this" {
-  name     = var.cluster_name
-  location = var.location
+module "subnet" {
+  source       = "terraform-google-modules/network/google//modules/subnets"
+  network_name = var.vpc_name
+  project_id   = var.project
+  subnets = [
+    {
+      subnet_name   = "eks"
+      subnet_ip     = "172.16.0.0/14"
+      subnet_region = var.region
+    },
+  ]
 
-  network    = var.vpc_id
-  subnetwork = var.subnet_id
-
-  remove_default_node_pool = true
-  initial_node_count       = 1
-
-  master_auth {
-    username = ""
-    password = ""
-
-    client_certificate_config {
-      issue_client_certificate = false
-    }
-  }
-}
-
-resource "google_container_node_pool" "this" {
-  name       = "${var.cluster_name}-workers"
-  location   = var.location
-  cluster    = google_container_cluster.this.name
-  node_count = var.cluster_autoscale ? null : var.num_workers
-  version    = var.k8s_version
-
-  dynamic "autoscaling" {
-    for_each = var.cluster_autoscale ? [1] : []
-    content {
-      max_node_count = var.cluster_autoscale_max_workers
-      min_node_count = var.cluster_autoscale_min_workers
-    }
-  }
-
-  node_config {
-    preemptible  = true
-    machine_type = var.worker_instance_type
-
-    metadata = {
-      disable-legacy-endpoints = "true"
-    }
-
-    oauth_scopes = [
-      "https://www.googleapis.com/auth/logging.write",
-      "https://www.googleapis.com/auth/monitoring",
+  secondary_ranges = {
+    eks = [
+      {
+        range_name    = "eks-pods"
+        ip_cidr_range = "172.20.0.0/14"
+      },
+      {
+        range_name    = "eks-svcs"
+        ip_cidr_range = "172.24.0.0/14"
+      },
     ]
   }
 }
 
-data "template_file" "kubeconfig" {
-  template = file("${path.module}/gke_kubeconfig-template.yaml")
+module "this" {
+  source            = "terraform-google-modules/kubernetes-engine/google"
+  ip_range_pods     = "eks-pods"
+  ip_range_services = "eks-svcs"
+  name              = var.cluster_name
+  network           = var.vpc_name
+  project_id        = var.project
+  subnetwork        = "eks"
+  region            = var.region
 
-  vars = {
-    cluster_name    = google_container_cluster.this.name
-    endpoint        = google_container_cluster.this.endpoint
-    user_name       = google_container_cluster.this.master_auth.0.username
-    user_password   = google_container_cluster.this.master_auth.0.password
-    cluster_ca      = google_container_cluster.this.master_auth.0.cluster_ca_certificate
-    client_cert     = google_container_cluster.this.master_auth.0.client_certificate
-    client_cert_key = google_container_cluster.this.master_auth.0.client_key
-  }
-}
-
-resource "local_file" "kubeconfiggke" {
-  content  = data.template_file.kubeconfig.rendered
-  filename = "${path.module}/kubeconfig_gke"
+  node_pools = [
+    {
+      name         = "default-node-pool"
+      autoscaling  = var.cluster_autoscale
+      machine_type = var.worker_instance_type == "" ? null : var.worker_instance_type
+      min_count    = var.cluster_autoscale_min_workers == 0 ? 1 : var.cluster_autoscale_min_workers
+      max_count    = var.cluster_autoscale_max_workers == 0 ? 100 : var.cluster_autoscale_max_workers
+    },
+  ]
 }
