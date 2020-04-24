@@ -1,6 +1,7 @@
 provider "google" {}
 
 variable "gcp_project" {}
+variable "gcp_region" {}
 variable "vpc_name" {
   default = "test"
 }
@@ -8,6 +9,8 @@ variable "vpc_name" {
 module "network" {
   source   = "github.com/insight-w3f/terraform-polkadot-gcp-network.git"
   vpc_name = var.vpc_name
+  project  = var.gcp_project
+  region   = var.gcp_region
 }
 
 module "defaults" {

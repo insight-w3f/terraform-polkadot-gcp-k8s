@@ -14,6 +14,7 @@ func TestTerraformDefaults(t *testing.T) {
 
 	exampleFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/defaults")
 	projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
+	region := gcp.GetGoogleRegionFromEnvVar(t)
 
 	_, err := os.Getwd()
 	if err != nil {
@@ -24,6 +25,7 @@ func TestTerraformDefaults(t *testing.T) {
 		TerraformDir: exampleFolder,
 		Vars: map[string]interface{}{
 			"gcp_project": projectID,
+			"gcp_region": region,
 		},
 	}
 
