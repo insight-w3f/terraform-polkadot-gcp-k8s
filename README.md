@@ -34,7 +34,11 @@ No requirements.
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| google | n/a |
+| local | n/a |
+| template | n/a |
 
 ## Inputs
 
@@ -61,6 +65,7 @@ No provider.
 |------|-------------|
 | cluster\_ca\_cert | The base64 encoded public certificate for the cluster's certificate authority |
 | endpoint | The base URL of the API server on the Kubernetes master node |
+| kube\_config | The full contents of the Kubernetes cluster's kubeconfig file |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

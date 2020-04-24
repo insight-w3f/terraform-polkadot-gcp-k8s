@@ -58,3 +58,21 @@ module "this" {
     },
   ]
 }
+
+data "google_client_config" "this" {}
+
+data "template_file" "kubeconfig" {
+  template = file("${path.module}/gke_kubeconfig-template.yaml")
+
+  vars = {
+    cluster_name = module.this.name
+    endpoint     = module.this.endpoint
+    cluster_ca   = module.this.ca_certificate
+    token        = data.google_client_config.this.access_token
+  }
+}
+
+resource "local_file" "kubeconfiggke" {
+  content  = data.template_file.kubeconfig.rendered
+  filename = "${path.module}/kubeconfig_gke"
+}
