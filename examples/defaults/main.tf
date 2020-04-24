@@ -16,5 +16,5 @@ module "network" {
 module "defaults" {
   source   = "../.."
   project  = var.gcp_project
-  vpc_name = var.vpc_name
+  vpc_name = module.network.public_vpc_name
 }
