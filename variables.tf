@@ -31,20 +31,15 @@ variable "owner" {
   default     = ""
 }
 
-variable "zone" {
-  description = "The GCP zone to deploy in"
-  type        = string
-  default     = "us-east1-b"
-}
-
-########
-# GCP
-########
-
-variable "location" {
-  description = "The GCP location to deploy in"
+variable "region" {
+  description = "The GCP region to deploy in"
   type        = string
   default     = "us-east1"
+}
+
+variable "project" {
+  description = "The GCP project"
+  type        = string
 }
 
 ########
@@ -55,12 +50,6 @@ variable "cluster_name" {
   description = "Name of the k8s cluster"
   type        = string
   default     = "cluster"
-}
-
-variable "k8s_version" {
-  description = "Version of k8s to use"
-  type        = string
-  default     = null
 }
 
 variable "num_workers" {
@@ -78,27 +67,26 @@ variable "worker_instance_type" {
 variable "cluster_autoscale" {
   description = "Do you want the cluster's worker pool to autoscale?"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "cluster_autoscale_min_workers" {
   description = "Minimum number of workers in worker pool"
   type        = number
-  default     = 1
+  default     = 0
 }
 
 variable "cluster_autoscale_max_workers" {
   description = "Maximum number of workers in worker pool"
   type        = number
-  default     = 1
+  default     = 0
 }
 
-variable "vpc_id" {
-  description = "Name or self-link of the GCE VPC to connect to cluster"
+variable "vpc_name" {
+  description = "Name of the GCE VPC to connect to cluster"
   type        = string
 }
 
-variable "subnet_id" {
-  description = "Name or self-link of the GCE subnet to connect to cluster"
-  type        = string
+variable "kubernetes_subnet" {
+  description = "Subnet to connect cluster to"
 }

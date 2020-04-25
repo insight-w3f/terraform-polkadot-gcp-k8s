@@ -1,6 +1,7 @@
 package test
 
 import (
+	"github.com/gruntwork-io/terratest/modules/gcp"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	test_structure "github.com/gruntwork-io/terratest/modules/test-structure"
 	"log"
@@ -12,6 +13,8 @@ func TestTerraformDefaults(t *testing.T) {
 	t.Parallel()
 
 	exampleFolder := test_structure.CopyTerraformFolderToTemp(t, "../", "examples/defaults")
+	projectID := gcp.GetGoogleProjectIDFromEnvVar(t)
+	region := gcp.GetGoogleRegionFromEnvVar(t)
 
 	_, err := os.Getwd()
 	if err != nil {
@@ -21,6 +24,8 @@ func TestTerraformDefaults(t *testing.T) {
 	terraformOptions := &terraform.Options{
 		TerraformDir: exampleFolder,
 		Vars: map[string]interface{}{
+			"gcp_project": projectID,
+			"gcp_region": region,
 		},
 	}
 
