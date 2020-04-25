@@ -12,32 +12,6 @@ module "label" {
   stage       = var.stage
 }
 
-module "subnet" {
-  source       = "terraform-google-modules/network/google//modules/subnets"
-  network_name = var.vpc_name
-  project_id   = var.project
-  subnets = [
-    {
-      subnet_name   = "eks"
-      subnet_ip     = "172.16.0.0/14"
-      subnet_region = var.region
-    },
-  ]
-
-  secondary_ranges = {
-    eks = [
-      {
-        range_name    = "eks-pods"
-        ip_cidr_range = "172.20.0.0/14"
-      },
-      {
-        range_name    = "eks-svcs"
-        ip_cidr_range = "172.24.0.0/14"
-      },
-    ]
-  }
-}
-
 module "this" {
   source            = "terraform-google-modules/kubernetes-engine/google"
   ip_range_pods     = "eks-pods"
