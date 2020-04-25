@@ -49,6 +49,7 @@ No requirements.
 | cluster\_autoscale\_min\_workers | Minimum number of workers in worker pool | `number` | `0` | no |
 | cluster\_name | Name of the k8s cluster | `string` | `"cluster"` | no |
 | environment | The environment | `string` | `""` | no |
+| kubernetes\_subnet | Subnet to connect cluster to | `any` | n/a | yes |
 | namespace | The namespace to deploy into | `string` | `""` | no |
 | network\_name | The network name, ie kusama / mainnet | `string` | `""` | no |
 | num\_workers | Number of workers for worker pool | `number` | `1` | no |

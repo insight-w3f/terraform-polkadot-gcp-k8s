@@ -12,6 +12,10 @@ module "label" {
   stage       = var.stage
 }
 
+data "google_compute_subnetwork" "this" {
+  name = var.kubernetes_subnet
+}
+
 module "this" {
   source            = "terraform-google-modules/kubernetes-engine/google"
   ip_range_pods     = "eks-pods"
@@ -19,7 +23,7 @@ module "this" {
   name              = var.cluster_name
   network           = var.vpc_name
   project_id        = var.project
-  subnetwork        = "eks"
+  subnetwork        = data.google_compute_subnetwork.this.name
   region            = var.region
 
   node_pools = [

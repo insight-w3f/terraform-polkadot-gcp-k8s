@@ -86,3 +86,7 @@ variable "vpc_name" {
   description = "Name of the GCE VPC to connect to cluster"
   type        = string
 }
+
+variable "kubernetes_subnet" {
+  description = "Subnet to connect cluster to"
+}

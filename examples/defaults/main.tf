@@ -14,7 +14,8 @@ module "network" {
 }
 
 module "defaults" {
-  source   = "../.."
-  project  = var.gcp_project
-  vpc_name = module.network.public_vpc_name
+  source            = "../.."
+  project           = var.gcp_project
+  vpc_name          = module.network.public_vpc_name
+  kubernetes_subnet = module.network.kubernetes_subnet
 }
