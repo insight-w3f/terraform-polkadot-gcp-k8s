@@ -65,6 +65,7 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | cluster\_ca\_cert | The base64 encoded public certificate for the cluster's certificate authority |
+| cluster\_name | The name of the cluster |
 | endpoint | The base URL of the API server on the Kubernetes master node |
 | kube\_config | The full contents of the Kubernetes cluster's kubeconfig file |
 

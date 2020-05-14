@@ -12,3 +12,8 @@ output "kube_config" {
   description = "The full contents of the Kubernetes cluster's kubeconfig file"
   value       = local_file.kubeconfiggke.content
 }
+
+output "cluster_name" {
+  description = "The name of the cluster"
+  value       = module.this.name
+}
