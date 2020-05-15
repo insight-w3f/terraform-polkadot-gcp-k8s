@@ -18,8 +18,8 @@ data "google_compute_subnetwork" "this" {
 
 module "this" {
   source            = "terraform-google-modules/kubernetes-engine/google"
-  ip_range_pods     = "eks-pods"
-  ip_range_services = "eks-svcs"
+  ip_range_pods     = "${var.kubernetes_subnet}-pods"
+  ip_range_services = "${var.kubernetes_subnet}-svcs"
   name              = var.cluster_name
   network           = var.vpc_name
   project_id        = var.project
