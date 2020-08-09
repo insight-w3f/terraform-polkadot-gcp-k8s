@@ -1,35 +1,7 @@
 ########
 # Label
 ########
-variable "environment" {
-  description = "The environment"
-  type        = string
-  default     = ""
-}
 
-variable "namespace" {
-  description = "The namespace to deploy into"
-  type        = string
-  default     = ""
-}
-
-variable "stage" {
-  description = "The stage of the deployment"
-  type        = string
-  default     = ""
-}
-
-variable "network_name" {
-  description = "The network name, ie kusama / mainnet"
-  type        = string
-  default     = ""
-}
-
-variable "owner" {
-  description = "Owner of the infrastructure"
-  type        = string
-  default     = ""
-}
 
 variable "region" {
   description = "The GCP region to deploy in"
@@ -79,7 +51,7 @@ variable "cluster_autoscale_min_workers" {
 variable "cluster_autoscale_max_workers" {
   description = "Maximum number of workers in worker pool"
   type        = number
-  default     = 0
+  default     = 10
 }
 
 variable "vpc_name" {
