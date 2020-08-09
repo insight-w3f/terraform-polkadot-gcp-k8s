@@ -1,0 +1,49 @@
+---
+
+print_:
+  type: print
+  statement: Configuring Polkadot GCP Kubernetes Cluster
+
+cluster_autoscale:
+  type: confirm
+  message: Do you want to enable cluster autoscaling?
+
+cluster_autoscale_max_workers:
+  type: input
+  message: What do you want the maximum number of workers to be?
+  when: "{{ nuki.cluster_autoscale }}"
+  default: 10
+
+cluster_autoscale_min_workers:
+  type: input
+  message: What do you want the minimum number of workers to be?
+  when: "{{ nuki.cluster_autoscale }}"
+  default: 3
+
+num_workers:
+  type: input
+  message: What do you want to set the initial number of workers to be?
+  when: "{{ nuki.cluster_autoscale }}"
+  default: 3
+
+instance_family_:
+  type: select
+  # TODO: Make sure the instances are available in the region
+  message: Which instance family do you want to use?
+  choices:
+    - e2
+    - n1
+    - n2
+    - n2d
+
+gcp_available_instances_:
+  type: gcp_instance_types
+  zone: "{{ nuki.azs[0] }}"
+  project: "{{ nuki.project }}"
+  instance_families:
+    - "{{ nuki.instance_family_ }}"
+
+worker_instance_type:
+  type: select
+  message: What type of worker instances do you want to create?
+  choices: "{{ nuki.gcp_available_instances_ }}"
