@@ -11,19 +11,19 @@ cluster_autoscale:
 cluster_autoscale_max_workers:
   type: input
   message: What do you want the maximum number of workers to be?
-  when: "{{ nuki.cluster_autoscale }}"
+  when: "{{ cluster_autoscale }}"
   default: 10
 
 cluster_autoscale_min_workers:
   type: input
   message: What do you want the minimum number of workers to be?
-  when: "{{ nuki.cluster_autoscale }}"
+  when: "{{ cluster_autoscale }}"
   default: 3
 
 num_workers:
   type: input
   message: What do you want to set the initial number of workers to be?
-  when: "{{ nuki.cluster_autoscale }}"
+  when: "{{ cluster_autoscale }}"
   default: 3
 
 instance_family_:
@@ -38,12 +38,12 @@ instance_family_:
 
 gcp_available_instances_:
   type: gcp_instance_types
-  zone: "{{ nuki.azs[0] }}"
-  gcp_project: "{{ nuki.project }}"
+  zone: "{{ azs[0] }}"
+  gcp_project: "{{ project }}"
   instance_families:
-    - "{{ nuki.instance_family_ }}"
+    - "{{ instance_family_ }}"
 
 worker_instance_type:
   type: select
   message: What type of worker instances do you want to create?
-  choices: "{{ nuki.gcp_available_instances_ }}"
+  choices: "{{ gcp_available_instances_ }}"
